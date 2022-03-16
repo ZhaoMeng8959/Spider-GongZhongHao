@@ -9,12 +9,16 @@ import datetime
 import random
 import pymysql
 import requests
+from requests.adapters import HTTPAdapter
 import shutil
 from threading import Thread
 from pymysql.converters import escape_string
 from bs4 import BeautifulSoup
 
 sess = requests.Session()
+# max_retries=10 重试10次
+sess.mount('http://', HTTPAdapter(max_retries=10))
+sess.mount('https://', HTTPAdapter(max_retries=10))
 
 file_path = os.path.dirname(__file__)
 with open(os.path.join(file_path, 'config.json'), encoding='UTF-8') as fp:
@@ -80,8 +84,9 @@ def start():
                 init_param(official_account_name, cookie_number)
                 print('----- 当前cookie序号: %d -----' % cookie_number)
                 print('----- 开始查询公众号[%s]相关文章 -----' % official_account_name)
+
                 response = requests.get(weixin_search_url, cookies=CONFIG['cookies'][cookie_number], headers=headers,
-                                        params=REQUEST_PARAM_2)
+                                        params=REQUEST_PARAM_2, timeout=10)
                 time.sleep(10)
                 total_num = response.json().get('app_msg_cnt')
                 if total_num is None:
@@ -116,14 +121,18 @@ def save_cur_serial_number_to_config(official_account_name, cur_serial_number=0)
 
 
 def init_param(official_account_name, cookie_number):
-    response = requests.get(url=weixin_url_before_login, cookies=CONFIG['cookies'][cookie_number])
+    response = requests.get(url=weixin_url_before_login, cookies=CONFIG['cookies'][cookie_number], timeout=10)
     token = re.findall(r'token=(\d+)', str(response.url))[0]
     time.sleep(2)
     REQUEST_PARAM_1['token'] = token
     REQUEST_PARAM_1['query'] = official_account_name
     print('----- 正在查询[%s]相关公众号 -----' % official_account_name)
     response = requests.get(weixin_url_after_login, cookies=CONFIG['cookies'][cookie_number], headers=headers,
-                            params=REQUEST_PARAM_1)
+                            params=REQUEST_PARAM_1, timeout=10)
+    # 解决: 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败
+    if response is None:
+        time.sleep(10 * 60)
+        return
     time.sleep(2)
     print('----- 查询成功，默认选择返回结果的第一条数据 -----')
     lists = response.json().get('list')[0]
@@ -138,7 +147,7 @@ def get_article(official_account_name, total_num, cookie_number, cur_serial_numb
         REQUEST_PARAM_2['begin'] = current_num
         REQUEST_PARAM_2['random'] = random.random()
         response = requests.get(weixin_search_url, cookies=CONFIG['cookies'][cookie_number], headers=headers,
-                                params=REQUEST_PARAM_2)
+                                params=REQUEST_PARAM_2, timeout=10)
         print('----- 开始爬取第%d条到%d条文章 -----' % (
             current_num + 1, current_num + len(response.json().get('app_msg_list', []))))
         time.sleep(5)
@@ -186,7 +195,7 @@ def save_article_to_file(official_account_name, filepath, title, link):
         shutil.rmtree(filepath)
     os.makedirs(filepath)
     os.chdir(filepath)
-    html = sess.get(link, headers=headers)
+    html = sess.get(link, headers=headers, timeout=10)
     soup_html = BeautifulSoup(html.text, 'lxml')
     article = soup_html.find('div', id='js_content')
 
@@ -227,7 +236,7 @@ def save_article_to_file(official_account_name, filepath, title, link):
 
 
 def save_article_to_mysql(official_account_name, aid, title, digest, link, create_time, update_time):
-    html = sess.get(link, headers=headers)
+    html = sess.get(link, headers=headers, timeout=10)
     soup_html = BeautifulSoup(html.text, 'lxml')
     article = soup_html.find('div', id='js_content')
 
@@ -256,7 +265,6 @@ def save_article_to_mysql(official_account_name, aid, title, digest, link, creat
         up_time = time.mktime(time.strptime(str(update_time), time_format_str))
         mysql_up_time = time.mktime(time.strptime(str(select_result[0]), time_format_str))
         if int(up_time) != int(mysql_up_time):
-        	# 若存在且判断该文章更新过，就更新该条数据
             sql = '''UPDATE `xun`.`spider_gongzhonghao_result` 
 	    			 SET `un_id`=%d, `url`="%s", `title`="%s", `content`="%s" , 
 	    			     `chrono`=%d, `type`=%d, `count`=%d, `last_scan_time`="%s", `last_update_time`="%s"

@@ -10,4 +10,4 @@ CREATE TABLE `spider_gongzhonghao_result` (
   `count` int(11) DEFAULT '0' COMMENT '点击次数',
   `last_scan_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新扫描时间',
   `last_update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公众号文章爬取';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='电子科技大学';

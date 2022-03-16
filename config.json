@@ -1,18 +1,15 @@
 {
   "official_accounts_name": [
     "电子科技大学",
-    "四川师范大学",
-    "西安电子科技大学"
+    "四川师范大学"
   ],
   "un_id": {
     "电子科技大学": 0,
-    "四川师范大学": 1,
-    "西安电子科技大学": 2
+    "四川师范大学": 1
   },
   "cur_serial_number": {
     "电子科技大学": 0,
-    "四川师范大学": 0,
-    "西安电子科技大学": 0
+    "四川师范大学": 0
   },
   "cookies": [
     {
@@ -35,13 +32,41 @@
       "slave_sid": "aUo0QTdPNHU5eGd1aDI1bUpsMk53QzNSdzJvRGw1U3p0Z3d3Yjd3ak14a3pPeXBDVUhsYVlYOVc5bk1oTUVJbkgxZDlXcVR3R3JuTkFFNWpwd2p2eWF5eG9pbkVtanBVbmtCeWFoWlhjeFBYQXhrdWxpeEFWT1U2OEhXOW1GUnNscVJNdmdXNXE2VEM3S1Rj",
       "slave_user": "gh_84714d1ca382",
       "xid": "0516634b4766b68f208cb86e39e67244"
+    },
+    {
+      "appmsglist_action_3581694824": "card",
+      "RK": "RfmBEjngV3",
+      "ptcz": "01b591b41acabce4cd6ca3c732f85321fc60a1e1f6ad1989fa092daf77337a90",
+      "_qpsvr_localtk": "0.1934243045094619",
+      "uin": "o0346380107",
+      "skey": "@o2ZqzatFg",
+      "luin": "o0346380107",
+      "lskey": "00010000011833533f8232c59c97d8b541132eabf70c6c40fa50f6861908429113e5b4a7b201535dfe3f19f5",
+      "ua_id": "tzibktbKwvqEGVPKAAAAAOM0__GasyQdPiIREkxSM8g=",
+      "wxuin": "47331931595588",
+      "uuid": "bfd78ff299e06ba6cb9c76c338d48da6",
+      "rand_info": "CAESINgjKFh+qW0ZtD17SKk/7zECqZcyiQuCYUMCcjOx4Bmy",
+      "slave_bizuin": "3581694824",
+      "data_bizuin": "3581694824",
+      "bizuin": "3581694824",
+      "data_ticket": "hjr45zuzlk43lSOHx1F2/y3SZEUbOlSOELk4ABPIsm1bcXy/ByDWKXcyhRtj+QRB",
+      "slave_sid": "SkVCYU5XdWh2TTRoUlcxaGJhYjJId29DVVBWaERBNG9KWXJFWmE4a1dpWF80Zkl3U01rRHZ1OTYyOGpZV2JYSEo5VGt0QmlGNHhDVnlPWlhaSEJVNzlEczM0NlJYZEpnN3dvc3FVdTlaMjJYM0xEbUpDWFA2SVVaUnZlWElocm8xNjFUMFkyMEVEUTVhcDBs",
+      "slave_user": "gh_fa0e39e8a4b5",
+      "xid": "8bc19655ff1540121322b14b2b182eb9",
+      "mm_lang": "zh_CN",
+      "pgv_info": "ssid=s3833078735",
+      "pgv_pvid": "7192514800",
+      "o_cookie": "346380107",
+      "pac_uid": "1_346380107",
+      "rewardsn": "",
+      "wxtokenkey": "777"
     }
   ],
   "mysql_connect": {
-    "ip_address": "127.0.0.1",
+    "ip_address": "",
     "port_number": 3340,
-    "username": "root",
-    "password": "123456",
-    "db_name": "spider_gongzhonghao"
+    "username": "",
+    "password": "",
+    "db_name": ""
   }
 }
