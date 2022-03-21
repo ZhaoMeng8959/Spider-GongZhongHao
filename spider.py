@@ -239,7 +239,7 @@ def get_article(total_num):
         if current_num - cur_serial_number >= 30:
             return current_num
 
-        # 睡眠60秒到90秒，防止被封
+        # 睡眠30秒到60秒，防止被封
         time.sleep(random.randint(30, 60))
     return total_num
 
